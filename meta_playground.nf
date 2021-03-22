@@ -72,6 +72,16 @@ if ( (params.cores.toInteger() > params.max_cores.toInteger()) && workflow.profi
 * INPUTs
 **************************/
 
+
+
+// fastq Input
+    if (params.fastq) { fastq_file_ch = Channel
+        .fromPath( params.fastq, checkIfExists: true)
+        .map { file -> tuple(file.simpleName, file) }
+        .view()
+    }
+
+
 // fastq raw input direct from basecalling
     if (params.fastq_pass && params.list && !workflow.profile.contains('test_fastq')) { 
         fastq_dir_ch = Channel
@@ -100,11 +110,7 @@ if ( (params.cores.toInteger() > params.max_cores.toInteger()) && workflow.profi
         .view()
     }
 
-    if (params.fastq) { fastq_file_ch = Channel
-        .fromPath( params.fastq, checkIfExists: true)
-        .map { file -> tuple(file.simpleName, file) }
-        .view()
-    }
+
     // extended input
     // if (params.samples && params.extended) { 
     //     extended_input_ch = Channel.fromPath( params.samples, checkIfExists: true)
