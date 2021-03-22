@@ -1,0 +1,6 @@
+nextflow-autodownload-databases/
+*.log*
+work/
+.nextflow/
+results/
+test_data/
